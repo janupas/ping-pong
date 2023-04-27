@@ -126,11 +126,18 @@ const animate = () => {
 animate();
 
 window.addEventListener("keydown", (e) => {
+  /**
+   * Detecting key presses and wall collision
+   */
   if (e.key === "ArrowRight") {
-    player.update("right");
+    if (!(player.x + player.width >= cv.width)) {
+      player.update("right");
+    }
   }
 
   if (e.key === "ArrowLeft") {
-    player.update("left");
+    if (!player.x <= 0) {
+      player.update("left");
+    }
   }
 });
