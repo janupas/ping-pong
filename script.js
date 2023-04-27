@@ -70,7 +70,30 @@ class Player {
   }
 }
 
+class Ball {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.dx = 3;
+    this.dy = 2;
+    this.size = 20;
+  }
+
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+  }
+
+  update() {
+    this.x += this.dx;
+    this.y += this.dy;
+  }
+}
+
 const player = new Player(playerX);
+const ball = new Ball(cv.width / 2, cv.height / 2);
 
 /**
  * Rendering all bricks
@@ -107,10 +130,15 @@ const init = () => {
   renderBricks();
 
   player.draw();
+  ball.draw();
 };
 
 // Calling init function
 init();
+
+const handleBall = () => {
+  ball.update();
+};
 
 const animate = () => {
   ctx.clearRect(0, 0, cv.width, cv.height);
@@ -118,7 +146,10 @@ const animate = () => {
   // draw bricks
   renderBricks();
 
+  handleBall();
+
   player.draw();
+  ball.draw();
 
   requestAnimationFrame(animate);
 };
