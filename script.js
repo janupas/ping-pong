@@ -23,14 +23,17 @@ class Brick {
     this.y = y;
     this.width = width;
     this.height = height;
+    this.show = true;
   }
 
   draw() {
     ctx.fillStyle = "lightblue";
 
-    ctx.rect(this.x, this.y, this.width, this.height);
-    ctx.fill();
-    ctx.stroke();
+    if (this.show) {
+      ctx.rect(this.x, this.y, this.width, this.height);
+      ctx.fill();
+      ctx.stroke();
+    }
   }
 }
 
@@ -38,7 +41,13 @@ class Brick {
  * Initialize everything
  */
 const init = () => {
+  /**
+   * Outer loop to spawn brick columns
+   */
   for (let i = 0; i < nbCols; i++) {
+    /**
+     * Inner loop will spaw bricks in rows
+     */
     for (let j = 0; j < nbRows; j++) {
       bricksArray.push(new Brick(currentX, currentY, cv.width / nbRows, 20));
       currentX += info.dx;
@@ -51,6 +60,9 @@ const init = () => {
     currentY += info.dy;
   }
 
+  /**
+   * Rendering all bricks
+   */
   for (let k = 0; k < bricksArray.length; k++) {
     bricksArray[k].draw();
   }
