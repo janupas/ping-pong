@@ -89,6 +89,17 @@ class Ball {
   update() {
     this.x += this.dx;
     this.y += this.dy;
+
+    /**
+     * Detect side wall collision
+     */
+    if (this.x + this.size > cv.width || this.x - this.size < 0) {
+      this.dx *= -1;
+    }
+
+    if (this.y + this.size > cv.height || this.y - this.size < 0) {
+      this.dy *= -1;
+    }
   }
 }
 
