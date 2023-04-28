@@ -72,7 +72,7 @@ class Player {
 
 const player = new Player(playerX);
 
-class Ball {
+class Cube {
   constructor(x, y) {
     this.x = x;
     this.y = y;
@@ -108,17 +108,17 @@ class Ball {
      * Collision with player
      */
     if (
-      player.x < ball.x + ball.size &&
-      player.x + player.width > ball.x &&
-      player.y < ball.y + ball.size &&
-      player.y + player.height > ball.y
+      player.x < cube.x + cube.size &&
+      player.x + player.width > cube.x &&
+      player.y < cube.y + cube.size &&
+      player.y + player.height > cube.y
     ) {
       this.dy *= -1;
     }
   }
 }
 
-const ball = new Ball(cv.width / 2, cv.height / 2);
+const cube = new Cube(cv.width / 2, cv.height / 2);
 
 /**
  * Rendering all bricks
@@ -155,14 +155,14 @@ const init = () => {
   renderBricks();
 
   player.draw();
-  ball.draw();
+  cube.draw();
 };
 
 // Calling init function
 init();
 
-const handleBall = () => {
-  ball.update();
+const handleBrick = () => {
+  cube.update();
 };
 
 const animate = () => {
@@ -171,10 +171,10 @@ const animate = () => {
   // draw bricks
   renderBricks();
 
-  handleBall();
+  handleBrick();
 
   player.draw();
-  ball.draw();
+  cube.draw();
 
   requestAnimationFrame(animate);
 };
