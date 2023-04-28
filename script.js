@@ -72,6 +72,54 @@ class Player {
 
 const player = new Player(playerX);
 
+class Cube {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.dx = 3;
+    this.dy = 2;
+    this.size = 20;
+  }
+
+  draw() {
+    ctx.beginPath();
+    // ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.rect(this.x, this.y, this.size, this.size);
+    ctx.fill();
+    ctx.stroke();
+  }
+
+  update() {
+    this.x += this.dx;
+    this.y += this.dy;
+
+    /**
+     * Detect side wall collision
+     */
+    if (this.x + this.size > cv.width || this.x - this.size < 0) {
+      this.dx *= -1;
+    }
+
+    if (this.y + this.size > cv.height || this.y - this.size < 0) {
+      this.dy *= -1;
+    }
+
+    /**
+     * Collision with player
+     */
+    if (
+      player.x < cube.x + cube.size &&
+      player.x + player.width > cube.x &&
+      player.y < cube.y + cube.size &&
+      player.y + player.height > cube.y
+    ) {
+      this.dy *= -1;
+    }
+  }
+}
+
+const cube = new Cube(cv.width / 2, cv.height / 2);
+
 /**
  * Rendering all bricks
  */
@@ -107,10 +155,15 @@ const init = () => {
   renderBricks();
 
   player.draw();
+  cube.draw();
 };
 
 // Calling init function
 init();
+
+const handleBrick = () => {
+  cube.update();
+};
 
 const animate = () => {
   ctx.clearRect(0, 0, cv.width, cv.height);
@@ -118,7 +171,10 @@ const animate = () => {
   // draw bricks
   renderBricks();
 
+  handleBrick();
+
   player.draw();
+  cube.draw();
 
   requestAnimationFrame(animate);
 };
