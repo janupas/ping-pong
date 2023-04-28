@@ -70,6 +70,8 @@ class Player {
   }
 }
 
+const player = new Player(playerX);
+
 class Ball {
   constructor(x, y) {
     this.x = x;
@@ -81,7 +83,8 @@ class Ball {
 
   draw() {
     ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    // ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.rect(this.x, this.y, this.size, this.size);
     ctx.fill();
     ctx.stroke();
   }
@@ -100,10 +103,21 @@ class Ball {
     if (this.y + this.size > cv.height || this.y - this.size < 0) {
       this.dy *= -1;
     }
+
+    /**
+     * Collision with player
+     */
+    if (
+      player.x < ball.x + ball.size &&
+      player.x + player.width > ball.x &&
+      player.y < ball.y + ball.size &&
+      player.y + player.height > ball.y
+    ) {
+      this.dy *= -1;
+    }
   }
 }
 
-const player = new Player(playerX);
 const ball = new Ball(cv.width / 2, cv.height / 2);
 
 /**
