@@ -132,7 +132,7 @@ const renderBricks = () => {
 /**
  * Initialize everything
  */
-const init = () => {
+const start = () => {
   /**
    * Outer loop to spawn brick columns
    */
@@ -159,13 +159,13 @@ const init = () => {
 };
 
 // Calling init function
-init();
+start();
 
 const handleBrick = () => {
   cube.update();
 };
 
-const animate = () => {
+const update = () => {
   ctx.clearRect(0, 0, cv.width, cv.height);
 
   // draw bricks
@@ -176,10 +176,24 @@ const animate = () => {
   player.draw();
   cube.draw();
 
-  requestAnimationFrame(animate);
+  for (let i = 0; i < bricksArray.length; i++) {
+    if (
+      bricksArray[i].x < cube.x + cube.size &&
+      bricksArray[i].x + bricksArray[i].width > cube.x &&
+      bricksArray[i].y < cube.y + cube.size &&
+      bricksArray[i].y + bricksArray[i].height > cube.y
+    ) {
+      bricksArray[i].show = false;
+      bricksArray.splice(i, 1);
+      cube.dy *= -1;
+      cube.dx *= -1;
+    }
+  }
+
+  requestAnimationFrame(update);
 };
 
-animate();
+update();
 
 window.addEventListener("keydown", (e) => {
   /**
