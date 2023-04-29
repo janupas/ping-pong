@@ -17,7 +17,7 @@ const info = {
 let currentX = 0;
 let currentY = 0;
 
-let playerX = 0;
+let playerX = cv.width / 2;
 
 class Brick {
   constructor(x, y, width, height) {
@@ -100,8 +100,12 @@ class Cube {
       this.dx *= -1;
     }
 
-    if (this.y + this.size > cv.height || this.y - this.size < 0) {
+    if (this.y - this.size < 0) {
       this.dy *= -1;
+    }
+
+    if (this.y + this.size > cv.height) {
+      console.log("Out");
     }
 
     /**
