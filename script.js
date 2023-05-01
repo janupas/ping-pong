@@ -100,12 +100,8 @@ class Cube {
       this.dx *= -1;
     }
 
-    if (this.y - this.size < 0) {
+    if (this.y - this.size < 0 || this.y + this.size > cv.height) {
       this.dy *= -1;
-    }
-
-    if (this.y + this.size > cv.height) {
-      console.log("Out");
     }
 
     /**
