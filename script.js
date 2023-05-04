@@ -19,6 +19,8 @@ let currentY = 0;
 
 let playerX = cv.width / 2;
 
+let animationId = null;
+
 class Brick {
   constructor(x, y, width, height) {
     this.x = x;
@@ -100,8 +102,13 @@ class Cube {
       this.dx *= -1;
     }
 
-    if (this.y - this.size < 0 || this.y + this.size > cv.height) {
+    if (this.y - this.size < 0) {
       this.dy *= -1;
+    }
+
+    if (this.y + this.size > cv.height) {
+      clearInterval(animationId);
+      alert("Game over");
     }
 
     /**
@@ -189,11 +196,11 @@ const update = () => {
       cube.dx *= -1;
     }
   }
-
-  requestAnimationFrame(update);
 };
 
-update();
+animationId = setInterval(() => {
+  update();
+}, 20);
 
 window.addEventListener("keydown", (e) => {
   /**
