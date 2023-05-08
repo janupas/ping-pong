@@ -7,7 +7,7 @@ cv.height = 500;
 const nbCols = 5;
 const nbRows = 10;
 
-const bricksArray = [];
+let bricksArray = [];
 
 const info = {
   dx: cv.width / nbRows,
@@ -107,8 +107,7 @@ class Cube {
     }
 
     if (this.y + this.size > cv.height) {
-      clearInterval(animationId);
-      alert("Game over");
+      gameOver();
     }
 
     /**
@@ -163,6 +162,15 @@ const start = () => {
 
   player.draw();
   cube.draw();
+};
+
+/**
+ * Simple game over function
+ */
+const gameOver = () => {
+  alert("GAME OVER");
+  document.location.reload();
+  clearInterval(animationId);
 };
 
 // Calling init function
